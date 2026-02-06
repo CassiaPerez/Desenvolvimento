@@ -180,7 +180,25 @@ function App() {
       });
     }
 
-    return result;
+    // 3. Custom Sorting: Priority (Online -> In Progress -> Delayed -> Pending)
+    // We use [...result] to create a copy and avoid mutating state directly with .sort()
+    return [...result].sort((a, b) => {
+      const getPriority = (status: ProjectStatus) => {
+        switch (status) {
+          case ProjectStatus.ONLINE: return 1;
+          case ProjectStatus.IN_PROGRESS: return 2;
+          case ProjectStatus.DELAYED: return 3;
+          case ProjectStatus.PENDING: return 4;
+          default: return 99;
+        }
+      };
+
+      const priorityA = getPriority(a.status);
+      const priorityB = getPriority(b.status);
+
+      return priorityA - priorityB;
+    });
+
   }, [projects, searchQuery, statusFilter]);
 
   const highPriorityProjects = filteredProjects.filter(p => p.status !== ProjectStatus.PENDING);

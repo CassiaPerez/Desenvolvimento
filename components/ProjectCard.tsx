@@ -51,20 +51,31 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onE
         className="cursor-pointer flex items-center justify-between gap-4"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-          {/* Left: Vitality Dot + Name */}
-          <div className="flex items-center gap-4 overflow-hidden">
-            <span className={`w-2 h-2 rounded-full flex-shrink-0 ${bgClass} ${pulseClass}`}></span>
-            <h3 className={`font-display font-bold text-white text-lg md:text-xl uppercase tracking-wide truncate group-hover:${textClass} transition-colors`}>
-              {project.name}
-            </h3>
+          {/* Left: Vitality Dot + Name + Metadata (Status/Sector) */}
+          <div className="flex items-start gap-4 overflow-hidden">
+            <span className={`mt-2 w-2 h-2 rounded-full flex-shrink-0 ${bgClass} ${pulseClass}`}></span>
+            
+            <div className="flex flex-col gap-1">
+                <h3 className={`font-display font-bold text-white text-lg md:text-xl uppercase tracking-wide truncate group-hover:${textClass} transition-colors`}>
+                  {project.name}
+                </h3>
+                
+                {/* Status and Sector Line */}
+                <div className="flex items-center flex-wrap gap-2 text-[10px] font-mono font-bold uppercase tracking-wider">
+                    <span className={`${textClass}`}>
+                        {project.status}
+                    </span>
+                    <span className="text-gray-700">|</span>
+                    <span className="text-gray-500 flex items-center gap-1">
+                         <span className="material-symbols-outlined text-[10px]">domain</span>
+                         {project.sector}
+                    </span>
+                </div>
+            </div>
           </div>
 
-          {/* Right: Sector + Chevron */}
+          {/* Right: Chevron Only */}
           <div className="flex items-center gap-4 flex-shrink-0">
-             <span className="hidden sm:flex items-center gap-2 font-mono text-xs font-bold text-gray-500 uppercase tracking-widest border border-gray-800 px-3 py-1.5 rounded bg-black/40">
-                <span className="material-symbols-outlined text-sm text-gray-600">domain</span>
-                {project.sector}
-             </span>
              <div className={`w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center transition-all duration-300 ${isExpanded ? 'bg-gray-800 rotate-180 text-white' : 'text-gray-600 group-hover:text-brand-blue group-hover:border-brand-blue/30'}`}>
                 <span className="material-symbols-outlined">expand_more</span>
              </div>
@@ -80,12 +91,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onUpdate, onE
                 
                 {/* Meta Information Column */}
                 <div className="md:col-span-4 space-y-4 border-r border-gray-800/50 pr-4">
-                    <div>
-                        <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1 font-bold">Status Atual</p>
-                        <span className={`${textClass} font-display font-bold text-xs border border-${colorClass}/30 px-3 py-1 rounded-sm bg-${colorClass}/5 inline-block`}>
-                            {project.status}
-                        </span>
-                    </div>
                     <div>
                         <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1 font-bold">ID do Sistema</p>
                         <span className="font-mono text-sm text-gray-300 bg-gray-900/50 px-2 py-0.5 rounded">{project.code}</span>
