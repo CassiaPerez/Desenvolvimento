@@ -73,19 +73,21 @@ function App() {
             sector: projectData.sector,
             technologies: projectData.technologies,
             url: projectData.url,
+            status: projectData.status, // Ensure status is updated
             updated_at: new Date().toISOString()
           })
           .eq('id', editingProject.id);
 
         if (error) throw error;
       } else {
-        // Insert new project - ID generation handled by Database
+        // Insert new project - Generate UUID client-side to fix NOT NULL constraint
         const { error } = await supabase
           .from('projects')
           .insert([{
+            id: crypto.randomUUID(), // Generates a v4 UUID
             code: projectData.code || 'UNK_0000',
             name: projectData.name || 'Novo Projeto',
-            status: ProjectStatus.PENDING,
+            status: projectData.status || ProjectStatus.PENDING,
             progress: 0,
             updated_at: new Date().toISOString(),
             team: [],
@@ -327,7 +329,11 @@ function App() {
                   )}
                   
                   {pendingProjects.map((project) => (
-                    <ProjectListItem key={project.id} project={project} />
+                    <ProjectListItem 
+                        key={project.id} 
+                        project={project}
+                        onEdit={openEditModal} 
+                    />
                   ))}
                 </div>
             )}

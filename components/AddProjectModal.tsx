@@ -15,6 +15,7 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({ isOpen, onClos
   const [description, setDescription] = useState('');
   const [sector, setSector] = useState('');
   const [techInput, setTechInput] = useState('');
+  const [status, setStatus] = useState<ProjectStatus>(ProjectStatus.PENDING);
 
   // Load project data when editing
   useEffect(() => {
@@ -25,6 +26,7 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({ isOpen, onClos
       setDescription(projectToEdit.description || '');
       setSector(projectToEdit.sector);
       setTechInput(projectToEdit.technologies.join(', '));
+      setStatus(projectToEdit.status);
     } else if (isOpen && !projectToEdit) {
       // Reset form for new project
       setName('');
@@ -33,6 +35,7 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({ isOpen, onClos
       setDescription('');
       setSector('');
       setTechInput('');
+      setStatus(ProjectStatus.PENDING);
     }
   }, [isOpen, projectToEdit]);
 
@@ -54,10 +57,9 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({ isOpen, onClos
       description,
       sector: sector || 'Geral',
       technologies,
-      // If editing, preserve existing status/progress unless specifically handled elsewhere
-      // If new, set defaults
+      status, // Include status in submission
+      // If editing, preserve progress. If new, default to 0.
       ...(projectToEdit ? {} : {
-        status: ProjectStatus.IN_PROGRESS,
         progress: 0,
         team: []
       })
@@ -128,6 +130,27 @@ export const AddProjectModal: React.FC<AddProjectModalProps> = ({ isOpen, onClos
                     className="w-full bg-black/40 border border-gray-700 rounded p-2 text-sm text-white focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none font-mono transition-colors"
                     placeholder="EX: FINANCEIRO"
                   />
+                </div>
+            </div>
+
+            {/* Status Selection */}
+            <div>
+                <label className="block text-[10px] font-display font-bold text-brand-blue uppercase tracking-widest mb-1">
+                    Status Atual
+                </label>
+                <div className="relative">
+                    <select
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value as ProjectStatus)}
+                        className="w-full bg-black/40 border border-gray-700 rounded p-2 text-xs text-white focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none font-mono uppercase appearance-none cursor-pointer"
+                    >
+                        {Object.values(ProjectStatus).map((s) => (
+                            <option key={s} value={s} className="bg-gray-900">{s}</option>
+                        ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-brand-blue">
+                         <span className="material-symbols-outlined text-sm">expand_more</span>
+                    </div>
                 </div>
             </div>
 
