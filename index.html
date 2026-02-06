@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CyberPortal v2.0</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#00CFFF",
+              secondary: "#D05CE3",
+              "cyber-black": "#0A0B0D",
+              "cyber-charcoal": "#121418",
+              "cyber-gray": "#1E2228",
+              "brand-blue": "#00CFFF",
+              "brand-lavender": "#D05CE3",
+            },
+            fontFamily: {
+              display: ["Orbitron", "sans-serif"],
+              sans: ["Rajdhani", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply bg-cyber-black text-gray-300 font-sans antialiased;
+          background-color: #0A0B0D;
+          position: relative;
+          font-size: 16px;
+        }
+      }
+      
+      /* Custom Animations & Effects */
+      .code-rain-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.15;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 50%, rgba(0, 207, 255, 0.05) 0%, transparent 80%);
+      }
+      
+      .code-column {
+        position: absolute;
+        top: -100px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: #00CFFF;
+        text-shadow: 0 0 5px #00CFFF, 0 0 10px rgba(0, 207, 255, 0.5);
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        animation: fall linear infinite;
+      }
+      
+      @keyframes fall {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(110vh); }
+      }
+      
+      .holographic-card {
+        background: linear-gradient(135deg, rgba(18, 20, 24, 0.85) 0%, rgba(30, 34, 40, 0.95) 100%);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(0, 207, 255, 0.25);
+        backdrop-filter: blur(4px);
+      }
+      
+      .holographic-card::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 207, 255, 0.03) 3px,
+          transparent 4px
+        );
+        pointer-events: none;
+      }
+      
+      .scan-line {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(0, 207, 255, 0.4), transparent);
+        position: absolute;
+        top: -2px;
+        animation: scan 4s linear infinite;
+      }
+      
+      @keyframes scan {
+        0% { top: -2% }
+        100% { top: 102% }
+      }
+      
+      .pulse-indicator {
+        box-shadow: 0 0 0 0 rgba(0, 207, 255, 0.7);
+        animation: pulse-blue 2s infinite;
+      }
+      
+      @keyframes pulse-blue {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 207, 255, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 207, 255, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 207, 255, 0); }
+      }
+      
+      .pulse-lavender {
+        box-shadow: 0 0 0 0 rgba(208, 92, 227, 0.7);
+        animation: pulse-lavender-anim 2s infinite;
+      }
+      
+      @keyframes pulse-lavender-anim {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(208, 92, 227, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(208, 92, 227, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(208, 92, 227, 0); }
+      }
+      
+      .cyber-table-row {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(18, 20, 24, 0.7);
+      }
+      
+      .cyber-table-row:hover {
+        background: rgba(0, 207, 255, 0.08);
+        border-left: 4px solid #00CFFF;
+        box-shadow: inset 10px 0 20px -10px rgba(0, 207, 255, 0.3);
+      }
+
+      /* Scrollbar customization for cyberpunk look */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0A0B0D; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1E2228; 
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #00CFFF; 
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
