@@ -26,8 +26,6 @@ export const Header: React.FC = () => {
           <div className="w-10 h-10 flex items-center justify-center rounded border border-brand-blue/50 bg-brand-blue/10">
              <span className="material-symbols-outlined text-brand-blue text-2xl">hub</span>
           </div>
-          <div className="h-8 w-[1px] bg-brand-blue/40"></div>
-          <span className="font-display font-black text-white text-xl tracking-tighter italic">PORTAL_v2.0</span>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative">

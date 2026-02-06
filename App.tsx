@@ -218,16 +218,8 @@ function App() {
           <div className="mb-8 flex justify-between items-end">
             <div>
               <h1 className="font-display text-4xl font-black text-white uppercase italic tracking-tight shadow-brand-blue drop-shadow-[0_0_5px_rgba(0,207,255,0.5)]">
-                Comando Executivo
+                Portal Desenvolvimento Cropfield
               </h1>
-              <div className="flex items-center gap-3 text-xs font-display text-brand-blue mt-2">
-                <span className="bg-brand-blue/10 px-3 py-1 rounded border border-brand-blue/40 tracking-widest uppercase">
-                  Sessão Criptografada
-                </span>
-                <span className="text-gray-500 font-bold text-sm">
-                   {isLoading ? 'SYNC_DB...' : 'DB_CONNECTED'}
-                </span>
-              </div>
             </div>
             
             <div className="hidden md:block text-right">
