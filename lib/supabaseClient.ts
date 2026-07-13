@@ -1,7 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Configuration injected based on user request for Bolt environment
-const SUPABASE_URL = 'https://hlwimyrmiyocnnwpwanl.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_L9e8tK2tk9blMKckf5lySg_mrASHmxg';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
